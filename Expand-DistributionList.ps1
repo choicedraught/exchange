@@ -1,4 +1,4 @@
- Param (
+Param (
     [Parameter(Mandatory=$true)][string]$DistGroup
 )
 
@@ -19,8 +19,7 @@ Function Get-Type ( $member ) {
     }
   } catch {
     #ManagementObjectNotFoundException
-    Write-Host "Debug :: Mailbox or list has been deleted."
-    $MyReturn = "Deleted"
+    Write-Host "Debug :: Recipient Not Found...which is weird."
   }
 
   Return $MyReturn
@@ -89,10 +88,10 @@ Function EnumMember ( $distListMember ) {
     Return
 }
 
-$debug            = $False
-$Verbose          = $False
-$global:MasterList= @()
-$distGroupMembers = Get-DistributionGroupMember $DistGroup
+$debug             = $False
+$Verbose           = $False
+$global:MasterList = @()
+$distGroupMembers  = Get-DistributionGroupMember $DistGroup
 
 Foreach ($member in $distGroupMembers) {
     EnumMember $member
