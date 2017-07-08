@@ -1,11 +1,11 @@
  
 Import-Module ActiveDirectory 
 
- Param (
+Param (
     [Parameter(Mandatory=$true)][string]$Group
 ) 
 
-$newbatch = @(); 
+$MasterList = @(); 
 $members = Get-ADGroupMember -Identity $Group -Recursive
 
 foreach ($member in $members) { 
@@ -19,7 +19,7 @@ foreach ($member in $members) {
         $row | Add-Member -MemberType NoteProperty -Name "DisplayName" -Value $mbox.DisplayName; 
         $row | Add-Member -MemberType NoteProperty -Name "TotalItemSizeinGB" -Value "0"; 
         $row | Add-Member -MemberType NoteProperty -Name "TotalItemSizeinMB" -Value "0"; 
-        $newbatch += $row 
+        $MasterList += $row 
     } else {
         $mbox = get-RemoteMailbox $member.SamAccountName; 
         $row = New-Object PSObject;  
@@ -29,9 +29,9 @@ foreach ($member in $members) {
         $row | Add-Member -MemberType NoteProperty -Name "DisplayName" -Value $mbox.DisplayName; 
         $row | Add-Member -MemberType NoteProperty -Name "TotalItemSizeinGB" -Value "0"; 
         $row | Add-Member -MemberType NoteProperty -Name "TotalItemSizeinMB" -Value "0"; 
-        $newbatch += $row 
+        $MasterList += $row 
     }
 } 
 
-Write-Host "Total recursive uniquie members: $($newbatch.length)" 
-$newbatch | Export-csv -path ".\$($Group).csv" -notypeinformation
+Write-Host "Total recursive uniquie members: $($MasterList.length)" 
+$MasterList | Export-csv -path ".\$($Group).csv" -notypeinformation
