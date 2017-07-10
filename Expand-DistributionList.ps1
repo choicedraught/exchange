@@ -96,6 +96,6 @@ $distGroupMembers  = Get-DistributionGroupMember $DistGroup
 Foreach ($member in $distGroupMembers) {
     EnumMember $member
 }
-Write-Host "Total recursive uniquie members: $($MasterList.length)"
+Write-Host "Total recursive unique members: $($MasterList.length)"
 $MasterList | Export-CSV -Path ".\$($DistGroup).csv" -notypeinformation
  
