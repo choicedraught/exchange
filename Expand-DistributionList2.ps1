@@ -33,5 +33,5 @@ foreach ($member in $members) {
     }
 } 
 
-Write-Host "Total recursive uniquie members: $($MasterList.length)" 
+Write-Host "Total recursive unique members: $($MasterList.length)" 
 $MasterList | Export-csv -path ".\$($Group).csv" -notypeinformation
